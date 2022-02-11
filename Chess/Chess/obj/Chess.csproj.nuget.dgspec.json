@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\Code\\Chess\\Chess\\Chess.csproj": {}
+    "F:\\Code\\Chess\\Chess\\Chess\\Chess.csproj": {}
   },
   "projects": {
-    "F:\\Code\\Chess\\Chess\\Chess.csproj": {
+    "F:\\Code\\Chess\\Chess\\Chess\\Chess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Code\\Chess\\Chess\\Chess.csproj",
+        "projectUniqueName": "F:\\Code\\Chess\\Chess\\Chess\\Chess.csproj",
         "projectName": "Chess",
-        "projectPath": "F:\\Code\\Chess\\Chess\\Chess.csproj",
+        "projectPath": "F:\\Code\\Chess\\Chess\\Chess\\Chess.csproj",
         "packagesPath": "C:\\Users\\osdesa\\.nuget\\packages\\",
-        "outputPath": "F:\\Code\\Chess\\Chess\\obj\\",
+        "outputPath": "F:\\Code\\Chess\\Chess\\Chess\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\osdesa\\AppData\\Roaming\\NuGet\\NuGet.Config",
