@@ -1,0 +1,15 @@
+F:\Code\Chess\Chess\obj\Debug\net6.0\Chess.csproj.AssemblyReference.cache
+F:\Code\Chess\Chess\obj\Debug\net6.0\Chess.GeneratedMSBuildEditorConfig.editorconfig
+F:\Code\Chess\Chess\obj\Debug\net6.0\Chess.AssemblyInfoInputs.cache
+F:\Code\Chess\Chess\obj\Debug\net6.0\Chess.AssemblyInfo.cs
+F:\Code\Chess\Chess\obj\Debug\net6.0\Chess.csproj.CoreCompileInputs.cache
+F:\Code\Chess\Chess\bin\Debug\net6.0\Chess.exe
+F:\Code\Chess\Chess\bin\Debug\net6.0\Chess.deps.json
+F:\Code\Chess\Chess\bin\Debug\net6.0\Chess.runtimeconfig.json
+F:\Code\Chess\Chess\bin\Debug\net6.0\Chess.dll
+F:\Code\Chess\Chess\bin\Debug\net6.0\ref\Chess.dll
+F:\Code\Chess\Chess\bin\Debug\net6.0\Chess.pdb
+F:\Code\Chess\Chess\obj\Debug\net6.0\Chess.dll
+F:\Code\Chess\Chess\obj\Debug\net6.0\ref\Chess.dll
+F:\Code\Chess\Chess\obj\Debug\net6.0\Chess.pdb
+F:\Code\Chess\Chess\obj\Debug\net6.0\Chess.genruntimeconfig.cache
