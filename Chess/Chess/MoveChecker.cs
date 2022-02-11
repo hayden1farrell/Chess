@@ -16,13 +16,29 @@ public class MoveChecker
         else
             offset = 8;
 
-        if (currentPostion + offset != newPostion)
-            valid =  false;
-        if((currentPostion >= 8 && currentPostion <= 15 || currentPostion >= 48 && currentPostion <= 55))
-            if (currentPostion + offset * 2 == newPostion)
-                valid = true;
-
-
+        if (board.board[newPostion].ToString() == "\0") // if the square is empty
+        {
+            if (currentPostion + offset != newPostion)
+                valid =  false;
+            if(currentPostion is >= 8 and <= 15 or >= 48 and <= 55)
+                if (currentPostion + offset * 2 == newPostion)
+                    valid = true;
+        }
+        else   // if the square has a piece 
+        {
+            valid = false;
+            if (turn == "Blue")
+            {
+                if (board.board[currentPostion - 7].ToString() != "\0" || board.board[currentPostion - 9].ToString() != "\0")
+                    valid = true;
+            }
+            else
+            {
+                if (board.board[currentPostion + 7].ToString() != "\0" || board.board[currentPostion + 9].ToString() != "\0")
+                    valid = true;
+            }
+        }
+        
         return valid;
     }
 
