@@ -8,8 +8,13 @@
             Console.WriteLine("Chess is starting up");
             FENhandler fen = new FENhandler();
             Board boardHandler = fen.ParseFen(StartingFen);
-            
-            boardHandler.DisplayBoard();
+            GameHandler handler = new GameHandler();
+
+            while (true)
+            {
+                boardHandler.DisplayBoard();
+                handler.PlayerMove(boardHandler);
+            }
         }
     }    
 }
