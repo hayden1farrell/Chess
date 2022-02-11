@@ -4,13 +4,22 @@ namespace Chess;
 
 public class FENhandler
 {
-    public Board ParseFen(string FEN)
+    public Board ParseFen(string FEN, GameHandler handler)
     {
         string[] config = FEN.Split(' ');
         Board board = new Board();
         PraseBoard(board, config[0]);
+        SetFirstMove(handler, config[1]);
         
         return board;
+    }
+
+    private void SetFirstMove(GameHandler handler, string playerToMove)
+    {
+        if (playerToMove == "w")
+            handler.Turn = "Blue";
+        else
+            handler.Turn = "Red";
     }
 
     private static void PraseBoard(Board board, string boardStatus)

@@ -2,7 +2,7 @@
 
 public class GameHandler
 {
-    private string Turn = "Blue";
+    public string Turn = "Blue";
     
     public void PlayerMove(Board board)
     {
@@ -12,8 +12,32 @@ public class GameHandler
         int newPostion = ConvertCellToInt(temp[1].ToLower());
 
         char currentPeice = board.board[currentPosition];
-        board.board[currentPosition] = ' ';
-        board.board[newPostion] = currentPeice;
+
+        bool validMove = CheckMove(currentPeice, newPostion, currentPosition, board);
+
+        if (validMove)
+        {
+            board.board[currentPosition] = ' ';
+            board.board[newPostion] = currentPeice;
+
+            if (Turn == "Blue")
+                Turn = "Red";
+            else
+                Turn = "Blue";
+        }
+        else
+        {
+            Console.WriteLine("Invalid move");
+        }
+    }
+
+    private bool CheckMove(char currentPeice, int newPostion, int currentPosition, Board board)
+    {
+        MoveChecker checker = new MoveChecker();
+        bool valid = true;
+        valid = checker.CorrectColour(Turn, currentPeice);
+
+        return valid;
     }
 
     private int ConvertCellToInt(string cell)
