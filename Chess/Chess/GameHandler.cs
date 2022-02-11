@@ -9,16 +9,16 @@ public class GameHandler
         Console.WriteLine($"It is {Turn} time to move enter current cell and the cell you want to move to");
         string[] temp = Console.ReadLine().Split(' ');
         int currentPosition = ConvertCellToInt(temp[0].ToLower());
-        int newPostion = ConvertCellToInt(temp[1].ToLower());
+        int newPosition = ConvertCellToInt(temp[1].ToLower());
 
-        char currentPeice = board.board[currentPosition];
+        char currentPiece = board.board[currentPosition];
 
-        bool validMove = CheckMove(currentPeice, newPostion, currentPosition, board);
+        bool validMove = CheckMove(currentPiece, newPosition, currentPosition, board);
 
         if (validMove)
         {
             board.board[currentPosition] = ' ';
-            board.board[newPostion] = currentPeice;
+            board.board[newPosition] = currentPiece;
 
             if (Turn == "Blue")
                 Turn = "Red";
@@ -31,21 +31,39 @@ public class GameHandler
         }
     }
 
-    private bool CheckMove(char currentPeice, int newPostion, int currentPosition, Board board)
+    private bool CheckMove(char currentPeice, int newPosition, int currentPosition, Board board)
     {
-        MoveChecker checker = new MoveChecker();
+        MoveChecker checker = new();
         bool valid = true;
-        valid = checker.CorrectColour(Turn, currentPeice);
+        valid = checker.BasicCheck(Turn, currentPeice);
+        switch (Char.ToLower(currentPeice))
+        {
+            case 'p':
+                valid = checker.PawnCheck(newPosition, currentPosition, Turn, board);
+                break;
+            case 'r':
+                checker.RookCheck();
+                break;
+            case 'n':
+                checker.KnightCheck();
+                break;
+            case 'b':
+                checker.BishopCheck();
+                break;
+            case 'q':
+                checker.QueenCheck();
+                break;
+            case 'k':
+                checker.KingCheck();
+                break;
+                
+        }
 
         return valid;
     }
 
     private int ConvertCellToInt(string cell)
     {
-        int position = 0;
-        position += Convert.ToInt32(cell[0]) - 96;
-        position += ((Convert.ToInt32(cell[1]) - 48) * 8) - 9;
-
-        return position;
+        return Convert.ToInt32(cell[0]) - 96 + ((Convert.ToInt32(cell[1]) - 48) * 8) - 9;
     }
 }
