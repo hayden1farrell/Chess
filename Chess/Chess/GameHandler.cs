@@ -36,29 +36,31 @@ public class GameHandler
         MoveChecker checker = new();
         bool valid = true;
         valid = checker.BasicCheck(Turn, currentPeice);
-        switch (Char.ToLower(currentPeice))
+        if (valid == true)
         {
-            case 'p':
-                valid = checker.PawnCheck(newPosition, currentPosition, Turn, board);
-                break;
-            case 'r':
-                checker.RookCheck();
-                break;
-            case 'n':
-                checker.KnightCheck();
-                break;
-            case 'b':
-                checker.BishopCheck();
-                break;
-            case 'q':
-                checker.QueenCheck();
-                break;
-            case 'k':
-                checker.KingCheck();
-                break;
+            switch (Char.ToLower(currentPeice))
+            {
+                case 'p':
+                    valid = checker.PawnCheck(newPosition, currentPosition, Turn, board);
+                    break;
+                case 'r':
+                    valid = checker.RookCheck(newPosition, currentPosition, board);
+                    break;
+                case 'n':
+                    checker.KnightCheck();
+                    break;
+                case 'b':
+                    valid = checker.BishopCheck(newPosition, currentPosition, board);
+                    break;
+                case 'q':
+                    valid =  checker.QueenCheck(newPosition, currentPosition, board);
+                    break;
+                case 'k':
+                    checker.KingCheck();
+                    break;
                 
+            }
         }
-
         return valid;
     }
 

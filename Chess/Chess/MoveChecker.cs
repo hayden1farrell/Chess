@@ -41,20 +41,43 @@ public class MoveChecker
         
         return valid;
     }
-
-    public void RookCheck()
+    
+    private bool SimpleMoverCheck(int currentPostion, int newPostion, Board board, int[] offsets)
     {
-        throw new NotImplementedException();
+        foreach (int direction in offsets)
+        {
+            int tempPostion = currentPostion;
+            while (tempPostion >= 0 && tempPostion <= board.board.Length - 1)
+            {
+                tempPostion += direction;
+                if (tempPostion == newPostion)
+                    return true;
+                else if(tempPostion >= 63 || tempPostion < 0)
+                    break;
+                else if (board.board[tempPostion].ToString() != "\0")
+                    break;
+            }
+        }
+
+        return false;
     }
 
-    public void BishopCheck()
+    public bool RookCheck(int currentPostion, int newPostion, Board board)
     {
-        throw new NotImplementedException();
+        int[] offsets = {-1, 8, 1, -8}; // left, up, right, down
+        return SimpleMoverCheck(currentPostion, newPostion, board, offsets);
     }
 
-    public void QueenCheck()
+    public bool BishopCheck(int currentPostion, int newPostion, Board board)
     {
-        throw new NotImplementedException();
+        int[] offsets = {7, 9, -7, -9}; // left, up, right, down
+        return SimpleMoverCheck(currentPostion, newPostion, board, offsets);
+    }
+
+    public bool QueenCheck(int currentPostion, int newPostion, Board board)
+    {
+        int[] offsets = {-1, 8, 1, -8, 7, 9, -7, -9};
+        return SimpleMoverCheck(currentPostion, newPostion, board, offsets);
     }
 
     public void KingCheck()
