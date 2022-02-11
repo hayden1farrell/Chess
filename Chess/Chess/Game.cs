@@ -4,9 +4,10 @@
     {
         private static void Main()
         {
+            string StartingFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
             Console.WriteLine("Chess is starting up");
             FENhandler fen = new FENhandler();
-            Board boardHandler = fen.ParseFen("rnb1kbnr/pppqpppp/8/1B6/4pP2/8/PPPP2PP/RNBQK1NR w KQkq - 2 4");
+            Board boardHandler = fen.ParseFen(StartingFen);
             
             boardHandler.DisplayBoard();
         }
