@@ -89,9 +89,15 @@ public class MoveChecker
         return SimpleMoverCheck(currentPosition, newPostion, board, offsets);
     }
 
-    public void KingCheck()
+    public bool KingCheck(int currentPosition, int newPosition)
     {
-        throw new NotImplementedException();
+        int[] offsets = {1, 7, 8, 9, -1, -7, -8, -9};
+        foreach (int direction in offsets)
+        {
+            if (currentPosition + direction == newPosition)
+                return true;
+        }
+        return false;
     }
 
     public bool KnightCheck(int currentPosition, int newPosition, Board board)

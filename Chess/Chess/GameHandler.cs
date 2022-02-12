@@ -56,7 +56,7 @@ public class GameHandler
                 valid =  checker.QueenCheck(currentPosition, newPosition, board);
                 break;
             case 'k':
-                checker.KingCheck();
+                valid = checker.KingCheck(currentPosition, newPosition);
                 break;
         }
         return valid;
