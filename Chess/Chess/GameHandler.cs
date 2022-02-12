@@ -31,35 +31,33 @@ public class GameHandler
         }
     }
 
-    private bool CheckMove(char currentPeice, int newPosition, int currentPosition, Board board)
+    private bool CheckMove(char currentPiece, int newPosition, int currentPosition, Board board)
     {
         MoveChecker checker = new();
         bool valid = true;
-        valid = checker.BasicCheck(Turn, currentPeice);
-        if (valid == true)
+        valid = checker.BasicCheck(Turn, currentPiece, board.board[newPosition]);
+        Console.Write(valid);
+        if (valid == false) return valid;
+        switch (char.ToLower(currentPiece))
         {
-            switch (Char.ToLower(currentPeice))
-            {
-                case 'p':
-                    valid = checker.PawnCheck(newPosition, currentPosition, Turn, board);
-                    break;
-                case 'r':
-                    valid = checker.RookCheck(newPosition, currentPosition, board);
-                    break;
-                case 'n':
-                    checker.KnightCheck();
-                    break;
-                case 'b':
-                    valid = checker.BishopCheck(newPosition, currentPosition, board);
-                    break;
-                case 'q':
-                    valid =  checker.QueenCheck(newPosition, currentPosition, board);
-                    break;
-                case 'k':
-                    checker.KingCheck();
-                    break;
-                
-            }
+            case 'p':
+                valid = checker.PawnCheck(newPosition, currentPosition, Turn, board);
+                break;
+            case 'r':
+                valid = checker.RookCheck(currentPosition, newPosition, board);
+                break;
+            case 'n':
+                valid =  checker.KnightCheck(currentPosition, newPosition, board);
+                break;
+            case 'b':
+                valid = checker.BishopCheck(currentPosition, newPosition, board);
+                break;
+            case 'q':
+                valid =  checker.QueenCheck(currentPosition, newPosition, board);
+                break;
+            case 'k':
+                checker.KingCheck();
+                break;
         }
         return valid;
     }

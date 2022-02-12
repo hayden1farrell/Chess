@@ -2,12 +2,21 @@
 
 public class MoveChecker
 {
-    public bool BasicCheck(string playerToMove, char piece)
+    public bool BasicCheck(string playerToMove, char piece, char newPiece)
     {
-        return playerToMove == "Blue" && char.IsUpper(piece) || playerToMove == "Red" && char.IsLower(piece);
+        bool valid = false;
+        valid  = playerToMove == "Blue" && char.IsUpper(piece) || playerToMove == "Red" && char.IsLower(piece);
+        if (newPiece != '\0' && valid == true)
+        {
+            if (playerToMove == "Blue" && char.IsUpper(newPiece) == true)
+                valid = false;
+            else if (playerToMove == "Red" && char.IsLower(newPiece) == true)
+                valid = false;
+        }
+        return valid;
     }
 
-    public bool PawnCheck(int newPostion, int currentPostion, string turn, Board board)
+    public bool PawnCheck(int newPosition, int currentPosition, string turn, Board board)
     {
         bool valid = true;
         int offset = 0;
@@ -16,12 +25,12 @@ public class MoveChecker
         else
             offset = 8;
 
-        if (board.board[newPostion].ToString() == "\0") // if the square is empty
+        if (board.board[newPosition] == '\0') // if the square is empty
         {
-            if (currentPostion + offset != newPostion)
+            if (currentPosition + offset != newPosition)
                 valid =  false;
-            if(currentPostion is >= 8 and <= 15 or >= 48 and <= 55)
-                if (currentPostion + offset * 2 == newPostion)
+            if(currentPosition is >= 8 and <= 15 or >= 48 and <= 55)
+                if (currentPosition + offset * 2 == newPosition)
                     valid = true;
         }
         else   // if the square has a piece 
@@ -29,12 +38,12 @@ public class MoveChecker
             valid = false;
             if (turn == "Blue")
             {
-                if (board.board[currentPostion - 7].ToString() != "\0" || board.board[currentPostion - 9].ToString() != "\0")
+                if (board.board[currentPosition - 7] != '\0' || board.board[currentPosition - 9] != '\0')
                     valid = true;
             }
             else
             {
-                if (board.board[currentPostion + 7].ToString() != "\0" || board.board[currentPostion + 9].ToString() != "\0")
+                if (board.board[currentPosition + 7] != '\0' || board.board[currentPosition + 9] != '\0')
                     valid = true;
             }
         }
@@ -42,18 +51,17 @@ public class MoveChecker
         return valid;
     }
     
-    private bool SimpleMoverCheck(int currentPostion, int newPostion, Board board, int[] offsets)
+    private bool SimpleMoverCheck(int currentPosition, int newPosition, Board board, int[] offsets)
     {
         foreach (int direction in offsets)
         {
-            int tempPostion = currentPostion;
-            bool toBreak = false;
+            int tempPostion = currentPosition;
             while (tempPostion >= 0 && tempPostion <= board.board.Length - 1)
             {
                 tempPostion += direction;
-                if(tempPostion >= 63 || tempPostion < 0)
+                if(tempPostion is >= 63 or < 0)
                     break;
-                if (tempPostion == newPostion)
+                if (tempPostion == newPosition)
                     return true;
                 if (board.board[tempPostion].ToString() != "\0")
                     break;
@@ -63,22 +71,22 @@ public class MoveChecker
         return false;
     }
 
-    public bool RookCheck(int currentPostion, int newPostion, Board board)
+    public bool RookCheck(int currentPosition, int newPosition, Board board)
     {
         int[] offsets = {-1, 8, 1, -8}; // left, up, right, down
-        return SimpleMoverCheck(currentPostion, newPostion, board, offsets);
+        return SimpleMoverCheck(currentPosition, newPosition, board, offsets);
     }
 
-    public bool BishopCheck(int currentPostion, int newPostion, Board board)
+    public bool BishopCheck(int currentPosition, int newPostion, Board board)
     {
         int[] offsets = {7, 9, -7, -9}; // left, up, right, down
-        return SimpleMoverCheck(currentPostion, newPostion, board, offsets);
+        return SimpleMoverCheck(currentPosition, newPostion, board, offsets);
     }
 
-    public bool QueenCheck(int currentPostion, int newPostion, Board board)
+    public bool QueenCheck(int currentPosition, int newPostion, Board board)
     {
         int[] offsets = {-1, 8, 1, -8, 7, 9, -7, -9};
-        return SimpleMoverCheck(currentPostion, newPostion, board, offsets);
+        return SimpleMoverCheck(currentPosition, newPostion, board, offsets);
     }
 
     public void KingCheck()
@@ -86,8 +94,15 @@ public class MoveChecker
         throw new NotImplementedException();
     }
 
-    public void KnightCheck()
+    public bool KnightCheck(int currentPosition, int newPosition, Board board)
     {
-        throw new NotImplementedException();
+        int[] offsets = {15, 17, 6, 10, -6, -10, -15, -17};
+        foreach (int direction in offsets)
+        {
+            if (currentPosition + direction == newPosition)
+                return true;
+        }
+
+        return false;
     }
 }
