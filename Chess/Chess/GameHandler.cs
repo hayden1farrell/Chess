@@ -3,7 +3,7 @@
 public class GameHandler
 {
     public string Turn = "Blue";
-    
+    private int enPassentSquare = -555;
     public void PlayerMove(Board board)
     {
         Console.WriteLine($"It is {Turn} time to move enter current cell and the cell you want to move to");
@@ -41,22 +41,27 @@ public class GameHandler
         switch (char.ToLower(currentPiece))
         {
             case 'p':
-                valid = checker.PawnCheck(newPosition, currentPosition, Turn, board);
+                (valid, enPassentSquare) = checker.PawnCheck(newPosition, currentPosition, Turn, board, enPassentSquare);
                 break;
             case 'r':
                 valid = checker.RookCheck(currentPosition, newPosition, board);
+                enPassentSquare = -555;
                 break;
             case 'n':
-                valid =  checker.KnightCheck(currentPosition, newPosition, board);
+                valid =  checker.KnightCheck(currentPosition, newPosition);
+                enPassentSquare = -555;
                 break;
             case 'b':
                 valid = checker.BishopCheck(currentPosition, newPosition, board);
+                enPassentSquare = -555;
                 break;
             case 'q':
                 valid =  checker.QueenCheck(currentPosition, newPosition, board);
+                enPassentSquare = -555;
                 break;
             case 'k':
                 valid = checker.KingCheck(currentPosition, newPosition);
+                enPassentSquare = -555;
                 break;
         }
         return valid;

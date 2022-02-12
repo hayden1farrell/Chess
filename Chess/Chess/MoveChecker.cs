@@ -16,8 +16,9 @@ public class MoveChecker
         return valid;
     }
 
-    public bool PawnCheck(int newPosition, int currentPosition, string turn, Board board)
+    public (bool, int) PawnCheck(int newPosition, int currentPosition, string turn, Board board, int enPassentSquares)
     {
+        bool enPassent = false;
         bool valid = true;
         int offset = 0;
         if (turn == "Blue")
@@ -31,7 +32,17 @@ public class MoveChecker
                 valid =  false;
             if(currentPosition is >= 8 and <= 15 or >= 48 and <= 55)
                 if (currentPosition + offset * 2 == newPosition)
+                {
+                    enPassentSquares = newPosition - offset;
+                    enPassent = true;
                     valid = true;
+                }
+
+            if (newPosition == enPassentSquares)
+            {
+                board.board[enPassentSquares - offset] = '\0';
+                valid = true;
+            }
         }
         else   // if the square has a piece 
         {
@@ -47,8 +58,11 @@ public class MoveChecker
                     valid = true;
             }
         }
+
+        if (enPassent == false)
+            enPassentSquares = -555;
         
-        return valid;
+        return (valid, enPassentSquares);
     }
     
     private bool SimpleMoverCheck(int currentPosition, int newPosition, Board board, int[] offsets)
@@ -100,7 +114,7 @@ public class MoveChecker
         return false;
     }
 
-    public bool KnightCheck(int currentPosition, int newPosition, Board board)
+    public bool KnightCheck(int currentPosition, int newPosition)
     {
         int[] offsets = {15, 17, 6, 10, -6, -10, -15, -17};
         foreach (int direction in offsets)
