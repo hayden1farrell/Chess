@@ -47,14 +47,15 @@ public class MoveChecker
         foreach (int direction in offsets)
         {
             int tempPostion = currentPostion;
+            bool toBreak = false;
             while (tempPostion >= 0 && tempPostion <= board.board.Length - 1)
             {
                 tempPostion += direction;
+                if(tempPostion >= 63 || tempPostion < 0)
+                    break;
                 if (tempPostion == newPostion)
                     return true;
-                else if(tempPostion >= 63 || tempPostion < 0)
-                    break;
-                else if (board.board[tempPostion].ToString() != "\0")
+                if (board.board[tempPostion].ToString() != "\0")
                     break;
             }
         }

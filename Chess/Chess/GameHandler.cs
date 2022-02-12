@@ -17,7 +17,7 @@ public class GameHandler
 
         if (validMove)
         {
-            board.board[currentPosition] = ' ';
+            board.board[currentPosition] = '\0';
             board.board[newPosition] = currentPiece;
 
             if (Turn == "Blue")
