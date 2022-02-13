@@ -8,9 +8,9 @@ public class MoveChecker
         valid  = playerToMove == "Blue" && char.IsUpper(piece) || playerToMove == "Red" && char.IsLower(piece);
         if (newPiece != '\0' && valid == true)
         {
-            if (playerToMove == "Blue" && char.IsUpper(newPiece) == true)
+            if (playerToMove == "Blue" && char.IsUpper(newPiece) == true && (newPiece != 'N' && piece != 'K'))
                 valid = false;
-            else if (playerToMove == "Red" && char.IsLower(newPiece) == true)
+            else if (playerToMove == "Red" && char.IsLower(newPiece) == true && (newPiece != 'n' && piece != 'k'))
                 valid = false;
         }
         return valid;
@@ -103,26 +103,30 @@ public class MoveChecker
         return SimpleMoverCheck(currentPosition, newPostion, board, offsets);
     }
 
-    public bool KingCheck(int currentPosition, int newPosition)
+    public (bool, bool) KingCheck(int currentPosition, int newPosition, bool[] casstleChances, Board board)
     {
         int[] offsets = {1, 7, 8, 9, -1, -7, -8, -9};
         foreach (int direction in offsets)
         {
             if (currentPosition + direction == newPosition)
-                return true;
+                return (true, false);
         }
-        return false;
+
+        int[] casstleMoves = new[] {3, -4, -4, 3};
+        for (int i = 0; i < casstleMoves.Length; i++)
+        {
+            Console.Write(currentPosition + casstleMoves[i] + "\n:" + newPosition);
+            Console.ReadKey();
+            if (currentPosition + casstleMoves[i] == newPosition && casstleChances[i] == true)
+                return (true, true);
+        }
+
+        return (false, false);
     }
 
     public bool KnightCheck(int currentPosition, int newPosition)
     {
         int[] offsets = {15, 17, 6, 10, -6, -10, -15, -17};
-        foreach (int direction in offsets)
-        {
-            if (currentPosition + direction == newPosition)
-                return true;
-        }
-
-        return false;
+        return offsets.Any(direction => currentPosition + direction == newPosition);
     }
 }

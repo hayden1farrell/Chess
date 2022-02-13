@@ -17,11 +17,15 @@ public class Board
                 line++;
             }
 
-            if (Char.IsLower(board[i]))
+            char currentPeice = board[i];
+            if (Char.IsLower(currentPeice))
                 Console.ForegroundColor = ConsoleColor.Red;
-            else if(Char.IsUpper(board[i]))
+            else if (Char.IsUpper(currentPeice))
                 Console.ForegroundColor = ConsoleColor.DarkBlue;
-            Console.Write($" {board[i]} ");
+            else
+                currentPeice = ' ';
+            
+            Console.Write($" {currentPeice} ");
             Console.ResetColor();
             Console.Write("|");
         }

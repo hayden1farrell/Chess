@@ -12,7 +12,7 @@
             while (true)
             {
                 boardHandler.DisplayBoard();
-                handler.PlayerMove(boardHandler);
+                boardHandler = handler.PlayerMove(boardHandler);
             }
         }
     }    

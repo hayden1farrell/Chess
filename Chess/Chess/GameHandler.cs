@@ -4,7 +4,8 @@ public class GameHandler
 {
     public string Turn = "Blue";
     private int enPassentSquare = -555;
-    public void PlayerMove(Board board)
+    private bool[] _castlePossibiltys = new[] { true, true, true, true};
+    public Board PlayerMove(Board board)
     {
         Console.WriteLine($"It is {Turn} time to move enter current cell and the cell you want to move to");
         string[] temp = Console.ReadLine().Split(' ');
@@ -13,31 +14,38 @@ public class GameHandler
 
         char currentPiece = board.board[currentPosition];
 
-        bool validMove = CheckMove(currentPiece, newPosition, currentPosition, board);
+        (bool validMove, bool castle) = CheckMove(currentPiece, newPosition, currentPosition, board);
 
         if (validMove)
         {
-            board.board[currentPosition] = '\0';
-            board.board[newPosition] = currentPiece;
-
-            if (Turn == "Blue")
-                Turn = "Red";
+            if (castle == true)
+            {
+                board.board[currentPosition] = board.board[newPosition];
+                board.board[newPosition] = currentPiece;
+            }
             else
-                Turn = "Blue";
+            {
+                board.board[currentPosition] = '\0';
+                board.board[newPosition] = currentPiece;
+            }
+
+            Turn = Turn == "Blue" ? "Red" : "Blue";
         }
         else
         {
             Console.WriteLine("Invalid move");
         }
+
+        return board;
     }
 
-    private bool CheckMove(char currentPiece, int newPosition, int currentPosition, Board board)
+    private (bool, bool) CheckMove(char currentPiece, int newPosition, int currentPosition, Board board)
     {
         MoveChecker checker = new();
+        bool castle = false;
         bool valid = true;
         valid = checker.BasicCheck(Turn, currentPiece, board.board[newPosition]);
-        Console.Write(valid);
-        if (valid == false) return valid;
+        if (valid == false) return (valid, castle);
         switch (char.ToLower(currentPiece))
         {
             case 'p':
@@ -60,11 +68,21 @@ public class GameHandler
                 enPassentSquare = -555;
                 break;
             case 'k':
-                valid = checker.KingCheck(currentPosition, newPosition);
+                (valid, castle )= checker.KingCheck(currentPosition, newPosition, _castlePossibiltys, board);
+                if (Turn == "Blue")
+                {
+                    _castlePossibiltys[0] = false;
+                    _castlePossibiltys[1] = false;
+                }
+                else
+                {
+                    _castlePossibiltys[2] = false;
+                    _castlePossibiltys[3] = false;
+                }
                 enPassentSquare = -555;
                 break;
         }
-        return valid;
+        return (valid, castle);
     }
 
     private int ConvertCellToInt(string cell)
