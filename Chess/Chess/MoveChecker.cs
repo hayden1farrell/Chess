@@ -112,13 +112,33 @@ public class MoveChecker
                 return (true, false);
         }
 
-        int[] casstleMoves = new[] {3, -4, -4, 3};
-        for (int i = 0; i < casstleMoves.Length; i++)
+        int[] casstleMoves = new[] {-4, 3, -4, -3};
+        if (board.board[newPosition] == 'n' || board.board[newPosition] == 'N')
         {
-            Console.Write(currentPosition + casstleMoves[i] + "\n:" + newPosition);
-            Console.ReadKey();
-            if (currentPosition + casstleMoves[i] == newPosition && casstleChances[i] == true)
-                return (true, true);
+            for (int i = 0; i < casstleMoves.Length; i++)
+            {
+                int offset = casstleMoves[i];
+                if (currentPosition + casstleMoves[i] == newPosition && casstleChances[i] == true)
+                {
+                    int inverseOffset = offset * -1;
+                    List<int> inbetweenSquares = new List<int>();
+                    for (i = newPosition; i != currentPosition; i += Math.Clamp(inverseOffset, -1, 1))
+                    {
+                        inbetweenSquares.Add(i);
+                    }
+
+                    inbetweenSquares.RemoveAt(inbetweenSquares.Count - 1);
+                    inbetweenSquares.RemoveAt(0);
+
+                    foreach (int squareNumber in inbetweenSquares)
+                    {
+                        if (board.board[squareNumber] != '\0')
+                            return (false, false);
+                    }
+
+                    return (true, true);
+                }
+            }        
         }
 
         return (false, false);

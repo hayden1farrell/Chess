@@ -53,6 +53,26 @@ public class GameHandler
                 break;
             case 'r':
                 valid = checker.RookCheck(currentPosition, newPosition, board);
+
+                if (valid == true)
+                {
+                    switch (currentPosition)
+                    {
+                        case 0:
+                            _castlePossibiltys[2] = false;
+                            break;
+                        case 7:
+                            _castlePossibiltys[3] = false;
+                            break;
+                        case 56:
+                            _castlePossibiltys[0] = false;
+                            break;
+                        case 63:
+                            _castlePossibiltys[1] = false;
+                            break;
+                    }
+                }
+                
                 enPassentSquare = -555;
                 break;
             case 'n':
@@ -69,15 +89,16 @@ public class GameHandler
                 break;
             case 'k':
                 (valid, castle )= checker.KingCheck(currentPosition, newPosition, _castlePossibiltys, board);
-                if (Turn == "Blue")
+                switch (valid)
                 {
-                    _castlePossibiltys[0] = false;
-                    _castlePossibiltys[1] = false;
-                }
-                else
-                {
-                    _castlePossibiltys[2] = false;
-                    _castlePossibiltys[3] = false;
+                    case true when Turn == "Blue":
+                        _castlePossibiltys[0] = false;
+                        _castlePossibiltys[1] = false;
+                        break;
+                    case true:
+                        _castlePossibiltys[2] = false;
+                        _castlePossibiltys[3] = false;
+                        break;
                 }
                 enPassentSquare = -555;
                 break;
