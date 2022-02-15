@@ -5,7 +5,7 @@ public class GameHandler
     public string Turn = "Blue";
     private int enPassentSquare = -555;
     private bool[] _castlePossibiltys = new[] { true, true, true, true};
-    public Board PlayerMove(Board board)
+    public Board PlayerMove(Board board, MoveChecker checker)
     {
         Console.WriteLine($"It is {Turn} time to move enter current cell and the cell you want to move to");
         string[] temp = Console.ReadLine().Split(' ');
@@ -14,7 +14,7 @@ public class GameHandler
 
         char currentPiece = board.board[currentPosition];
 
-        (bool validMove, bool castle) = CheckMove(currentPiece, newPosition, currentPosition, board);
+        (bool validMove, bool castle) = CheckMove(currentPiece, newPosition, currentPosition, board, checker);
 
         if (validMove)
         {
@@ -39,9 +39,9 @@ public class GameHandler
         return board;
     }
 
-    private (bool, bool) CheckMove(char currentPiece, int newPosition, int currentPosition, Board board)
+    private (bool, bool) CheckMove(char currentPiece, int newPosition, int currentPosition, Board board, MoveChecker checker)
     {
-        MoveChecker checker = new();
+        
         bool castle = false;
         bool valid = true;
         valid = checker.BasicCheck(Turn, currentPiece, board.board[newPosition]);

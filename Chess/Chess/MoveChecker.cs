@@ -8,11 +8,17 @@ public class MoveChecker
         valid  = playerToMove == "Blue" && char.IsUpper(piece) || playerToMove == "Red" && char.IsLower(piece);
         if (newPiece != '\0' && valid == true)
         {
-            if (playerToMove == "Blue" && char.IsUpper(newPiece) == true && (newPiece != 'N' && piece != 'K'))
-                valid = false;
-            else if (playerToMove == "Red" && char.IsLower(newPiece) == true && (newPiece != 'n' && piece != 'k'))
-                valid = false;
+            Console.Write(newPiece);
+            if (playerToMove == "Blue" && char.IsUpper(newPiece) == true)
+            {
+                valid = false || (newPiece == 'R' && piece == 'K');
+            }
+            else if (playerToMove == "Red" && char.IsLower(newPiece) == true)
+            {
+                valid = false || (newPiece == 'R' && piece == 'K');
+            }
         }
+
         return valid;
     }
 
